@@ -5,9 +5,11 @@ package com.tikalk.usermeter.mongo;
  */
 import org.springframework.data.annotation.Id;
 
+import java.util.logging.Logger;
 
 
 public class SlackPost {
+    private final static Logger LOGGER = Logger.getLogger(SlackPost.class.getName());
     @Id
     private String id;
     private Long timestamp;
@@ -20,6 +22,7 @@ public class SlackPost {
         this.user = user;
         this.channel = channel;
         this.text = text;
+
     }
 
     @Override

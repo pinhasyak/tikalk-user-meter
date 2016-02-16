@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.util.Properties;
+
 import java.util.logging.Logger;
 
 @RestController
@@ -19,10 +18,12 @@ public class SlackController {
     private SlackPostRepository repository;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void post(@RequestBody String body) throws IOException {
-        Properties properties = new Properties();
-        properties.load(new StringReader(body));
-        LOGGER.info(String.format("Get Post request: body: %s", body));
-        repository.save(new SlackPost(new Long(properties.getProperty("timestamp")), properties.getProperty("user_name"), properties.getProperty("channel_name"), properties.getProperty("text")));
+    public void post(@RequestParam(value = "user_name", required = false) String userName,
+                     @RequestParam(value = "channel_name", required = false) String channelName,
+                     @RequestParam(value = "text", required = false) String text) throws IOException {
+
+        LOGGER.info(String.format("Insert params : user_name: %s, channel_name %s, text %s", userName, channelName, text));
+
+        repository.save(new SlackPost(System.currentTimeMillis(), userName, channelName, text));
     }
 }
