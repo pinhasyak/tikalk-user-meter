@@ -23,6 +23,6 @@ public class SlackController {
         Properties properties = new Properties();
         properties.load(new StringReader(body));
         LOGGER.info(String.format("Get Post request: body: %s", body));
-        repository.save(new SlackPost(Long.getLong(properties.getProperty("timestamp")), properties.getProperty("user_name"), properties.getProperty("channel_name"), properties.getProperty("text")));
+        repository.save(new SlackPost(new Long(properties.getProperty("timestamp")), properties.getProperty("user_name"), properties.getProperty("channel_name"), properties.getProperty("text")));
     }
 }
